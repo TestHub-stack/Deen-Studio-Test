@@ -1,0 +1,147 @@
+/* main.css - Core styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+    --bg-deep: #020617;
+    --panel-bg: rgba(15, 23, 42, 0.95);
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --text-primary: #e5e7eb;
+    --text-muted: #9ca3af;
+    --border-subtle: rgba(148, 163, 184, 0.3);
+    --accent-gradient: linear-gradient(135deg, #8b5cf6, #22c55e);
+    --radius-card: 20px;
+    --radius-pill: 40px;
+    --font-size-base: 16px;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 1rem;
+    font-size: var(--font-size-base) !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.light-mode {
+    --bg-deep: #f0f2f5;
+    --panel-bg: rgba(255, 255, 255, 0.95);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --border-subtle: rgba(100, 116, 139, 0.2);
+}
+
+/* Force font size on all text elements */
+body, p, span, div, h1, h2, h3, h4, h5, h6, .dua-text, .habit-text, .stat-number, .stat-label, .tab, .setting-label, .font-size-display {
+    font-size: var(--font-size-base) !important;
+}
+
+/* Specific element adjustments */
+h1 {
+    font-size: calc(var(--font-size-base) * 1.8) !important;
+    font-weight: 500;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle, .stat-label, .setting-label {
+    font-size: calc(var(--font-size-base) * 0.9) !important;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-number {
+    font-size: calc(var(--font-size-base) * 2) !important;
+    font-weight: 350;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.glass-header {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-card);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Hide old sync-status */
+.sync-status {
+    display: none;
+}
+
+.settings-icon {
+    font-size: calc(var(--font-size-base) * 1.5) !important;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+}
+
+.settings-icon:hover {
+    transform: rotate(90deg);
+    color: var(--text-primary);
+    border-color: #8b5cf6;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    padding: 1.2rem;
+    border: 1px solid var(--border-subtle);
+    text-align: center;
+}
+
+.list-container {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 1.5rem;
+}
+
+.hidden {
+    display: none;
+}
