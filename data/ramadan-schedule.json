@@ -1,0 +1,79 @@
+[
+    {
+        "block": "Magrib",
+        "blockIcon": "🌙",
+        "startTime": "6:30 PM",
+        "endTime": "6:45 PM",
+        "items": [
+            { "time": "6:30 PM - 6:45 PM", "activity": "Magrib", "duration": "15 min", "special": true },
+            { "time": "6:45 PM - 8:45 PM", "activity": "Trading", "duration": "2 hr", "special": false },
+            { "time": "8:45 PM - 9:00 PM", "activity": "Wudu", "duration": "15 min", "special": false }
+        ]
+    },
+    {
+        "block": "Isha",
+        "blockIcon": "✨",
+        "startTime": "9:25 PM",
+        "endTime": "10:00 PM",
+        "items": [
+            { "time": "9:00 PM - 9:05 PM", "activity": "Isha", "duration": "5 min", "special": true },
+            { "time": "9:05 PM - 9:15 PM", "activity": "Nafils", "duration": "10 min", "special": false },
+            { "time": "9:15 PM - 9:20 PM", "activity": "Surah Al-Waqi'ah", "duration": "5 min", "special": false },
+            { "time": "9:20 PM - 9:25 PM", "activity": "Short Dua", "duration": "5 min", "special": false },
+            { "time": "9:25 PM - 10:00 PM", "activity": "Dinner", "duration": "35 min", "special": false },
+            { "time": "10:00 PM - 11:30 PM", "activity": "Relax", "duration": "1 hr 30 min", "special": false }
+        ]
+    },
+    {
+        "block": "Sleep",
+        "blockIcon": "💤",
+        "startTime": "11:30 PM",
+        "endTime": "4:00 AM",
+        "items": [
+            { "time": "11:30 PM - 4:00 AM", "activity": "Sleep", "duration": "4 hr 30 min", "special": false },
+            { "time": "4:00 AM - 4:45 AM", "activity": "Suhur", "duration": "45 min", "special": false },
+            { "time": "4:45 AM - 5:00 AM", "activity": "Wudu", "duration": "15 min", "special": false },
+            { "time": "5:00 AM - 5:15 AM", "activity": "Tahajjud", "duration": "15 min", "special": false },
+            { "time": "5:15 AM - 5:45 AM", "activity": "Salatul Tasbih", "duration": "30 min", "special": false }
+        ]
+    },
+    {
+        "block": "Fajr",
+        "blockIcon": "☀️",
+        "startTime": "5:45 AM",
+        "endTime": "5:55 AM",
+        "items": [
+            { "time": "5:45 AM - 5:55 AM", "activity": "Fajr", "duration": "10 min", "special": true },
+            { "time": "5:55 AM - 6:00 AM", "activity": "Short Dua", "duration": "5 min", "special": false },
+            { "time": "6:00 AM - 7:00 AM", "activity": "Quran", "duration": "1 hr", "special": false },
+            { "time": "7:00 AM - 10:00 AM", "activity": "Nap", "duration": "3 hr", "special": false },
+            { "time": "10:00 AM - 10:30 AM", "activity": "Shower", "duration": "30 min", "special": false },
+            { "time": "10:30 AM - 12:30 PM", "activity": "Memorization", "duration": "2 hr", "special": false }
+        ]
+    },
+    {
+        "block": "Dhuhr",
+        "blockIcon": "🌤️",
+        "startTime": "12:30 PM",
+        "endTime": "12:45 PM",
+        "items": [
+            { "time": "12:30 PM - 12:45 PM", "activity": "Dhuhr", "duration": "15 min", "special": true },
+            { "time": "12:45 PM - 1:00 PM", "activity": "Long Dua", "duration": "15 min", "special": false },
+            { "time": "1:00 PM - 4:00 PM", "activity": "Trading", "duration": "3 hr", "special": false },
+            { "time": "4:00 PM - 4:15 PM", "activity": "Wudu", "duration": "15 min", "special": false },
+            { "time": "4:15 PM - 4:30 PM", "activity": "Revision", "duration": "15 min", "special": false }
+        ]
+    },
+    {
+        "block": "Asr",
+        "blockIcon": "🌆",
+        "startTime": "4:30 PM",
+        "endTime": "4:40 PM",
+        "items": [
+            { "time": "4:30 PM - 4:40 PM", "activity": "Asr", "duration": "10 min", "special": true },
+            { "time": "4:40 PM - 4:45 PM", "activity": "Short Dua", "duration": "5 min", "special": false },
+            { "time": "4:45 PM - 6:05 PM", "activity": "Quran", "duration": "1 hr 20 min", "special": false },
+            { "time": "6:05 PM - 6:30 PM", "activity": "Long Dua", "duration": "25 min", "special": false }
+        ]
+    }
+]

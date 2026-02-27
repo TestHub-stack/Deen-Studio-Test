@@ -1,0 +1,322 @@
+/* planner.css - Daily Planner styles - Premium Elegant Design */
+
+.planner-header {
+    margin-bottom: 2.5rem;
+}
+
+.planner-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.planner-title {
+    font-size: calc(var(--font-size-base) * 1.8) !important;
+    font-weight: 350;
+    letter-spacing: 1px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+}
+
+#plannerSyncStatus {
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    font-size: calc(var(--font-size-base) * 0.8) !important;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    display: inline-block;
+}
+
+/* Time Distribution Cards */
+.time-distribution {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    background: var(--panel-bg);
+    border-radius: 32px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(10px);
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.distrib-item {
+    position: relative;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.distrib-label {
+    display: block;
+    font-size: calc(var(--font-size-base) * 0.75) !important;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.distrib-value {
+    display: block;
+    font-size: calc(var(--font-size-base) * 1.6) !important;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.distrib-bar {
+    display: block;
+    height: 6px;
+    background: var(--distrib-color, var(--accent-gradient));
+    border-radius: 6px;
+    opacity: 0.9;
+    transition: width 0.3s ease;
+    margin: 0 auto;
+    box-shadow: 0 0 10px var(--distrib-color);
+}
+
+body.light-mode .distrib-bar {
+    opacity: 0.8;
+    box-shadow: 0 0 8px var(--distrib-color);
+}
+
+/* Timeline Layout */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    min-height: 200px;
+}
+
+.timeline-block {
+    background: var(--panel-bg);
+    border-radius: 28px;
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-block:hover {
+    transform: translateY(-2px);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 15px 35px rgba(139, 92, 246, 0.2);
+}
+
+.timeline-block-header {
+    background: rgba(139, 92, 246, 0.15);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+body.light-mode .timeline-block-header {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.block-icon {
+    font-size: calc(var(--font-size-base) * 1.4) !important;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.block-title {
+    font-size: calc(var(--font-size-base) * 1.5) !important;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+    letter-spacing: 0.3px;
+}
+
+.block-time {
+    font-size: calc(var(--font-size-base) * 0.95) !important;
+    color: var(--text-primary);
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    padding: 0.4rem 1.2rem;
+    background: rgba(139, 92, 246, 0.2);
+    border-radius: 40px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    font-weight: 500;
+}
+
+body.light-mode .block-time {
+    background: rgba(139, 92, 246, 0.15);
+    color: #4c1d95;
+}
+
+.timeline-items {
+    padding: 1rem;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    margin-bottom: 0.3rem;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+}
+
+body.light-mode .timeline-item {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.timeline-item:hover {
+    background: rgba(139, 92, 246, 0.15);
+    transform: translateX(4px);
+}
+
+/* Special styling for prayer times */
+.timeline-item.special-activity {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.05));
+    border-left: 6px solid #8b5cf6;
+    margin-left: -4px;
+    box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+body.light-mode .timeline-item.special-activity {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.02));
+    border-left-color: #6d28d9;
+}
+
+.timeline-item.special-activity .item-activity {
+    font-weight: 700;
+    color: #8b5cf6;
+    text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+    font-size: calc(var(--font-size-base) * 1) !important;
+}
+
+body.light-mode .timeline-item.special-activity .item-activity {
+    color: #6d28d9;
+    text-shadow: 0 0 10px rgba(109, 40, 217, 0.3);
+}
+
+.item-time {
+    min-width: 180px;
+    font-size: calc(var(--font-size-base) * 0.9) !important;
+    color: #8b5cf6;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+body.light-mode .item-time {
+    color: #6d28d9;
+}
+
+.item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.item-activity {
+    font-size: calc(var(--font-size-base) * 0.95) !important;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+.item-duration {
+    font-size: calc(var(--font-size-base) * 0.85) !important;
+    color: #22c55e;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    padding: 0.3rem 1rem;
+    background: rgba(34, 197, 94, 0.2);
+    border-radius: 40px;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+body.light-mode .item-duration {
+    background: rgba(34, 197, 94, 0.15);
+    color: #166534;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 700px) {
+    .time-distribution {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .distrib-item {
+        text-align: center;
+    }
+    
+    .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .item-time {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .item-content {
+        width: 100%;
+    }
+    
+    .block-time {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .planner-title-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .timeline-block-header {
+        flex-wrap: wrap;
+    }
+    
+    .item-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .item-duration {
+        align-self: flex-start;
+    }
+}
+
+/* Animation for timeline items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-item {
+    animation: fadeInUp 0.4s ease forwards;
+    animation-delay: calc(var(--item-index, 0) * 0.05s);
+    opacity: 0;
+}

@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Deen Studio</title>
+    
+    <style>
+        /* main.css - Core styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --bg-deep: #020617;
+            --panel-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-primary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: rgba(148, 163, 184, 0.3);
+            --accent-gradient: linear-gradient(135deg, #8b5cf6, #22c55e);
+            --radius-card: 20px;
+            --radius-pill: 40px;
+            --font-size-base: 16px;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1rem;
+            font-size: var(--font-size-base) !important;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            --bg-deep: #f0f2f5;
+            --panel-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-primary: #1e293b;
+            --text-muted: #64748b;
+            --border-subtle: rgba(100, 116, 139, 0.2);
+        }
+
+        body, p, span, div, h1, h2, h3, h4, h5, h6, .dua-text, .habit-text, .stat-number, .stat-label, .tab, .setting-label, .font-size-display {
+            font-size: var(--font-size-base) !important;
+        }
+
+        h1 {
+            font-size: calc(var(--font-size-base) * 1.8) !important;
+            font-weight: 500;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle, .stat-label, .setting-label {
+            font-size: calc(var(--font-size-base) * 0.9) !important;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-number {
+            font-size: calc(var(--font-size-base) * 2) !important;
+            font-weight: 350;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .glass-header {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-card);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sync-status {
+            display: none;
+        }
+
+        .settings-icon {
+            font-size: calc(var(--font-size-base) * 1.5) !important;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .settings-icon:hover {
+            transform: rotate(90deg);
+            color: var(--text-primary);
+            border-color: #8b5cf6;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 1.2rem;
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .list-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 1.5rem;
+            border: 1px solid var(--border-subtle);
+            margin-bottom: 1.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* modal.css - Settings modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: calc(var(--font-size-base) * 1.5) !important;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .close-modal {
+            font-size: calc(var(--font-size-base) * 2) !important;
+            cursor: pointer;
+            color: var(--text-muted);
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--text-primary);
+        }
+
+        .setting-item {
+            margin-bottom: 2rem;
+        }
+
+        .setting-label {
+            margin-bottom: 1rem;
+        }
+
+        .theme-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .theme-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: var(--font-size-base) !important;
+        }
+
+        .theme-btn:hover {
+            border-color: #8b5cf6;
+        }
+
+        .theme-btn.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .font-size-control {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .font-size-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-subtle);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .font-size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .font-size-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .font-size-labels {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+        }
+
+        .font-size-display {
+            text-align: center;
+            color: var(--text-primary);
+            background: var(--panel-bg);
+            padding: 0.5rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* tabs.css - Tab navigation styles */
+        .main-tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--panel-bg);
+            padding: 0.4rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .sub-tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            padding: 0.3rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+            width: fit-content;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1.8rem;
+            border-radius: var(--radius-pill);
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: calc(var(--font-size-base) * 0.9) !important;
+        }
+
+        .tab:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.15), transparent);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3);
+        }
+
+        .dua-item {
+            background: var(--panel-bg);
+            border-radius: 60px;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .dua-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: var(--panel-bg);
+        }
+
+        .dua-text {
+            flex: 1;
+        }
+
+        .habit-item {
+            background: var(--panel-bg);
+            border-radius: 60px;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .habit-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: var(--panel-bg);
+        }
+
+        .habit-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border-subtle);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22c55e;
+            font-size: calc(var(--font-size-base) * 0.9) !important;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .habit-checkbox.checked {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+
+        .habit-text {
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .habit-text.completed {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* planner.css - Daily Planner styles */
+        .planner-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .planner-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .planner-title {
+            font-size: calc(var(--font-size-base) * 1.8) !important;
+            font-weight: 350;
+            letter-spacing: 1px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        #plannerSyncStatus {
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: calc(var(--font-size-base) * 0.8) !important;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            display: inline-block;
+        }
+
+        .time-distribution {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            background: var(--panel-bg);
+            border-radius: 32px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-subtle);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .distrib-item {
+            position: relative;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .distrib-label {
+            display: block;
+            font-size: calc(var(--font-size-base) * 0.75) !important;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .distrib-value {
+            display: block;
+            font-size: calc(var(--font-size-base) * 1.6) !important;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .distrib-bar {
+            display: block;
+            height: 6px;
+            background: var(--distrib-color, var(--accent-gradient));
+            border-radius: 6px;
+            opacity: 0.9;
+            transition: width 0.3s ease;
+            margin: 0 auto;
+            box-shadow: 0 0 10px var(--distrib-color);
+        }
+
+        body.light-mode .distrib-bar {
+            opacity: 0.8;
+            box-shadow: 0 0 8px var(--distrib-color);
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+        }
+
+        .timeline-block {
+            background: var(--panel-bg);
+            border-radius: 28px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-block:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-block-header {
+            background: rgba(139, 92, 246, 0.15);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        body.light-mode .timeline-block-header {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .block-icon {
+            font-size: calc(var(--font-size-base) * 1.4) !important;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .block-title {
+            font-size: calc(var(--font-size-base) * 1.5) !important;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            letter-spacing: 0.3px;
+        }
+
+        .block-time {
+            font-size: calc(var(--font-size-base) * 0.95) !important;
+            color: var(--text-primary);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            padding: 0.4rem 1.2rem;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 40px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            font-weight: 500;
+        }
+
+        body.light-mode .block-time {
+            background: rgba(139, 92, 246, 0.15);
+            color: #4c1d95;
+        }
+
+        .timeline-items {
+            padding: 1rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.2rem;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            margin-bottom: 0.3rem;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid transparent;
+            animation: fadeInUp 0.4s ease forwards;
+            animation-delay: calc(var(--item-index, 0) * 0.05s);
+            opacity: 0;
+        }
+
+        body.light-mode .timeline-item {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-item:hover {
+            background: rgba(139, 92, 246, 0.15);
+            transform: translateX(4px);
+        }
+
+        .timeline-item.special-activity {
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.05));
+            border-left: 6px solid #8b5cf6;
+            margin-left: -4px;
+            box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        body.light-mode .timeline-item.special-activity {
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.02));
+            border-left-color: #6d28d9;
+        }
+
+        .timeline-item.special-activity .item-activity {
+            font-weight: 700;
+            color: #8b5cf6;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            font-size: calc(var(--font-size-base) * 1) !important;
+        }
+
+        body.light-mode .timeline-item.special-activity .item-activity {
+            color: #6d28d9;
+            text-shadow: 0 0 10px rgba(109, 40, 217, 0.3);
+        }
+
+        .item-time {
+            min-width: 180px;
+            font-size: calc(var(--font-size-base) * 0.9) !important;
+            color: #8b5cf6;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        body.light-mode .item-time {
+            color: #6d28d9;
+        }
+
+        .item-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .item-activity {
+            font-size: calc(var(--font-size-base) * 0.95) !important;
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+
+        .item-duration {
+            font-size: calc(var(--font-size-base) * 0.85) !important;
+            color: #22c55e;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            padding: 0.3rem 1rem;
+            background: rgba(34, 197, 94, 0.2);
+            border-radius: 40px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        body.light-mode .item-duration {
+            background: rgba(34, 197, 94, 0.15);
+            color: #166534;
+        }
+
+        @media (max-width: 700px) {
+            .time-distribution {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .distrib-item {
+                text-align: center;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .item-time {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .item-content {
+                width: 100%;
+            }
+            
+            .block-time {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .planner-title-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .timeline-block-header {
+                flex-wrap: wrap;
+            }
+            
+            .item-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .item-duration {
+                align-self: flex-start;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <span class="close-modal" onclick="DeenStudio.UI.closeSettings()">&times;</span>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-label">Theme</div>
+                    <div class="theme-buttons">
+                        <button class="theme-btn" id="darkThemeBtn" onclick="DeenStudio.Settings.setTheme('dark')">Dark</button>
+                        <button class="theme-btn" id="lightThemeBtn" onclick="DeenStudio.Settings.setTheme('light')">Light</button>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">Font Size</div>
+                    <div class="font-size-control">
+                        <div class="font-size-display" id="fontSizeDisplay">16px</div>
+                        <input type="range" min="12" max="24" value="16" step="1" class="font-size-slider" id="fontSizeSlider" oninput="DeenStudio.Settings.updateFontSize(this.value)">
+                        <div class="font-size-labels">
+                            <span>Small</span>
+                            <span>Medium</span>
+                            <span>Large</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header class="glass-header">
+            <div>
+                <h1>Deen Studio</h1>
+                <div class="subtitle">list & intention</div>
+            </div>
+            <div class="header-actions">
+                <div class="settings-icon" onclick="DeenStudio.UI.openSettings()">⚙️</div>
+            </div>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">total duas</div>
+                <div class="stat-number" id="totalDuas">77</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">habits done</div>
+                <div class="stat-number" id="habitsDone">0/14</div>
+            </div>
+        </div>
+
+        <!-- Main Tabs -->
+        <div class="main-tab-nav">
+            <button class="tab" id="tabPlanner" onclick="DeenStudio.UI.switchMainTab('planner')">Daily Planner</button>
+            <button class="tab active" id="tabDua" onclick="DeenStudio.UI.switchMainTab('dua')">Dua</button>
+            <button class="tab" id="tabHabit" onclick="DeenStudio.UI.switchMainTab('habit')">Habit Tracker</button>
+        </div>
+
+        <!-- Daily Planner Section -->
+        <div id="plannerSection" class="list-container hidden">
+            <div class="planner-header">
+                <div class="planner-title-wrapper">
+                    <h2 class="planner-title">Ramadan Schedule</h2>
+                    <div class="sync-status" id="plannerSyncStatus">✓ Ramadan Mubarak</div>
+                </div>
+                
+                <!-- Time Distribution Cards -->
+                <div class="time-distribution">
+                    <div class="distrib-item" style="--distrib-color: #8b5cf6;">
+                        <span class="distrib-label">DEEN</span>
+                        <span class="distrib-value">4:15</span>
+                        <span class="distrib-bar" style="width: 19%"></span>
+                    </div>
+                    <div class="distrib-item" style="--distrib-color: #22c55e;">
+                        <span class="distrib-label">QURAN</span>
+                        <span class="distrib-value">2:25</span>
+                        <span class="distrib-bar" style="width: 11%"></span>
+                    </div>
+                    <div class="distrib-item" style="--distrib-color: #3b82f6;">
+                        <span class="distrib-label">MEMORIZATION</span>
+                        <span class="distrib-value">2:15</span>
+                        <span class="distrib-bar" style="width: 10%"></span>
+                    </div>
+                    <div class="distrib-item" style="--distrib-color: #a855f7;">
+                        <span class="distrib-label">TRADING</span>
+                        <span class="distrib-value">5:00</span>
+                        <span class="distrib-bar" style="width: 22%"></span>
+                    </div>
+                    <div class="distrib-item" style="--distrib-color: #f59e0b;">
+                        <span class="distrib-label">SLEEP</span>
+                        <span class="distrib-value">7:30</span>
+                        <span class="distrib-bar" style="width: 33%"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Schedule -->
+            <div class="timeline" id="timeline"></div>
+        </div>
+
+        <!-- Dua Section with Sub-tabs -->
+        <div id="duaSection" class="list-container">
+            <!-- Sub-tabs for Duniya/Akhira -->
+            <div class="sub-tab-nav">
+                <button class="tab active" id="subTabDuniya" onclick="DeenStudio.UI.switchSubTab('duniya')">Duniya</button>
+                <button class="tab" id="subTabAkhira" onclick="DeenStudio.UI.switchSubTab('akhira')">Akhira</button>
+            </div>
+
+            <!-- Duniya Sub-section -->
+            <div id="duniyaSubsection">
+                <div id="duniyaList" class="dua-list"></div>
+            </div>
+
+            <!-- Akhira Sub-section (hidden by default) -->
+            <div id="akhiraSubsection" class="hidden">
+                <div id="akhiraList" class="dua-list"></div>
+            </div>
+        </div>
+
+        <!-- Habit Tracker Section -->
+        <div id="habitSection" class="list-container hidden">
+            <div id="habitList" class="habit-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== MAIN APP ====================
+        const DeenStudio = {
+            state: {
+                currentMainTab: 'dua',
+                currentSubTab: 'duniya',
+                habits: {}
+            },
+
+            // ==================== DATA ====================
+            duas: {
+                duniya: [
+                    "Jo bhi zulm aur bad-sulooki woh usse, uski family se, ya apni family se jhel rahi hai, usse chhutkara dilane ke liye, usay talaq de dein.",
+                    "Usay mere liye behtar banayein aur mujhe uske liye behtar, aur humein jald se jald shaadi karwa dein, dono families ke masail ke saath Madina mein, iss saal bohot si barkat aur khair ke saath.",
+                    "Yousuf (AS) ki khoobsurati, Dawood (AS) ki awaaz, aur Suleiman (AS) ka saltanat aur daulat, aur mujhe is duniya aur aakhirat mein kamyabi de dein.",
+                    "Chahe jo bhi wajah ho ke woh wahan atki hui hai aur zulm aur bad-sulooki jhel rahi hai, mujhe nahi pata; Aapko zyada maloom hai. Usse un tamam cheezon se azaad kar dein taake woh unka muqabla kar sake. Usay taqat, quwat, sehat aur umeed de dein.",
+                    "Uske dil mein Allah aur Uske Rasool ke baad meri liye bepanah aur la-muhaddad muhabbat daal dein.",
+                    "Uski khwahish banayein ke woh mujhse shaadi kare aur is par kaam kare.",
+                    "Usay sirf mujhse khenchne wala banayein aur sirf mujhse khenche.",
+                    "Mujhe sirf uski taraf khenchne wala banayein.",
+                    "Uska dil sirf mujhse aur mere paas sukoon paaye, aur sirf mere paas rahat paaye.",
+                    "Mera dil sirf uske paas aur uske saath sukoon paaye, aur sirf uske paas rahat paaye.",
+                    "Usay mujhse wafadari de, aur mujhe usse wafadari de.",
+                    "Kisi aur ladke ya shauq ko uske paas aane na dein, aur usay har mard se meri siwa bachayein. Uske dil ko har mard se meri siwa bachayein.",
+                    "Uska akhlaq Amma Khadija, Amma Aisha, aur Amma Fathima ki tarah banayein, aur mujhe is saal usse shaadi karwa dein.",
+                    "Uska akhlaq Mufti Tariq Masood Shab aur Sajad Nauman Maulana jaisa banayein, jo apne ustaadon ki wives ke akhlaq ki tareef karte hain, aur mujhe is saal usse shaadi karwa dein.",
+                    "Mere rizq aur rozi ko apni fazal se khol dein.",
+                    "Sab ke dil ko meri taraf narm, meetha aur muhabbat bhara bana dein, jaise Aapne Fir'aun aur uske logon ke liye Musa (AS) ke liye kiya tha.",
+                    "Mujhe duniya ka sab se ameer insan bana dein, aur meri daulat ko Qiyamah ke din tak kabhi bhi khatam na hone dein.",
+                    "Mujhe Kingfisher Tower ka bungalow de dein.",
+                    "Mujhe luxury car ki collection de dein.",
+                    "Mujhe das free, stress-free, asaan aur pyar bhari jobs de dein jo Textron se behtar ho, permanent naukri ke tor par, jismein mujhe bohot saara free aur asaan waqt mile jismein main trading aur business jaise kaam kar sakoon.",
+                    "Mujhe journal website jald se jald banane mein madad dein, behtareen features ke saath aur sab se kam kharch mein, aur meherban tareeqe se.",
+                    "Hamare beech mein la-muhaddad sukoon aur muhabbat se barkat dein.",
+                    "Koi bhi cheez usse mujhse nuqsan na pohonchne de, na hi usay mujhse kisi tareeqe se nuqsan pohonchne dein, chahe wo zehni, jazbaati, ya jismani ho.",
+                    "Humein ek doosre ki aankhon ka thanda bana dein.",
+                    "Mere walidain ko lambi aur achi sehat de dein, jismein wo meri kamyabi dekh saken, zinda rah saken aur uska lutf utha saken.",
+                    "Mujhe Madina ki shehri aur rehaish de dein.",
+                    "Mujhe kabhi bhi akela ya bina khwahish ke na chhod dein; hamesha meri hifazat karein.",
+                    "Make every single one regret for treating me bad, left, insulted or thought I'm or I was weak.",
+                    "Help Firoz ma'am and everyone as such.",
+                    "Never let anyone or anything hurt or insult me.",
+                    "Give me very strong and attractive personality and character.",
+                    "Give me immense confidence and guts don't let anything or anyone fear me apart from you oh Allah.",
+                    "Make me the smartest of the humankind.",
+                    "Please give me a luxury jet and helicopter collection.",
+                    "Please give me the world's best luxurious palaces collection.",
+                    "Please give me Saudi citizenship.",
+                    "The world's most successful and dominating business group like BlackRock."
+                ],
+                akhira: [
+                    "Muje is saal Haram ya Nabawi mein I'tikaf karne ka mauqa de dein.",
+                    "Muje Haram, Nabawi, Hatim, aur Multazzam mein yeh tamam duas karne ka mauqa de dein.",
+                    "Muje Ka'bah ke andar Tahajjud namaz ada karne ka mauqa de dein.",
+                    "Muje wo bana dein jo aap ke raste mein kharch karna pasand kare.",
+                    "Muje Sadaqah Jariyah ka tareeqa ya aise businesses de dein jisse mein aur meri family Qiyamah tak faida uthayein, jaise Uthman (RA) ne kiya.",
+                    "Muje gareebon aur mohtaajon ko khana khilane aur madad karne ka mauqa de dein, sirf aap ke raste mein.",
+                    "Muje Quran ka Hafiz bana dein.",
+                    "Muje mubarak maut de dein, sab se behtareen Shahada ke saath, bina kisi dard, ghabrat, ya fikr ke.",
+                    "Muje hisaab ke liye na bulayein.",
+                    "Muje Jannah mein aap ki fazal se sab se ucha maqam de dein.",
+                    "Aakhirat ko mere liye asaan bana dein, jaise aap karte hain, aur apne muhabbaton aur paighambaron ki hifaazat karein.",
+                    "Muje uske saath bohot saare bachay (bete aur betiyan) de dein.",
+                    "Hamesha muje tauba aur acha aamaal ki hidayat de dein, sirf aap ko khush karne ke liye.",
+                    "Muje kabhi bhi usse shaadi ke liye dua karte hue thakna ya be-umeed na hone dein.",
+                    "Mere paas koi acha aamaal nahi hain, jaise aap ke saath kaamon mein imaan daar naukaron ke hain. Mera sirf aap par yakeen aur \"Kun Faya Kun\" par bharosa hai.",
+                    "Hamesha mere dil ko aap ki muhabbat aur huzoor se bhar dein aur mujhe kabhi bhi ek lamha bhi akela na chhod dein. Hamesha mujhe apne har faislay aur yaqeen ke saath baat karein, ke yeh sab aap se hai.",
+                    "Bless all my non Muslim friends with Deen.",
+                    "Accept every single one's dua who's making today or thought to make dua but forgot.",
+                    "Make everyones life ease",
+                    "Forgive every single one from Adam (AS) till last soul and admit into Jannah.",
+                    "Immense health, young beauty, don't make me look old, power, richness, royalty and Deen lifestyle for me, my family till Qayamah.",
+                    "Bless me as you blessed Sulaiman (AS).",
+                    "Love me as you love all prophets.",
+                    "Do not test me I don't have such strength.",
+                    "Make me an authentic preacher of your Deen.",
+                    "Protect me from every single thing no matter what like jealousy and so on.",
+                    "Make every single one who see me, who hear me, or even who hear about me immensely respect and love me in duniya and akhira.",
+                    "Bless me with the highest ranks in Jannah as prophet, I don't have such pious deeds and lifestyle I'm expecting out of your love and rehmat.",
+                    "Every single moment and breath I take keep me connected with you and talk to me never ever leave me no matter what.",
+                    "Respond, provide and accept my every single dua till no end.",
+                    "Make my tongue moist with your most loving remembrance till no end.",
+                    "Let and inspire my heart to make dua above and beyond human ability with greater vision.",
+                    "Give me the best ending without any pain, fear or worry.",
+                    "Give me death which makes you happy and proud of me oh Allah.",
+                    "Make my every single action try to satisfy you and your pleasure.",
+                    "Protect me from doing sins.",
+                    "Bless me with very happy, peaceful, joyful marriage life.",
+                    "Unite me with her as you united Adam (AS) and Amma Hawa (AS).",
+                    "Make me Your closest and most beloved servant till the end of time.",
+                    "Give me good characteristics like a prophet and make everyone love and respect me."
+                ]
+            },
+
+            habitsList: [
+                "Fajr prayer on time",
+                "Read Quran (minimum 1 page)",
+                "Dhuhr prayer on time",
+                "Asr prayer on time",
+                "Maghrib prayer on time",
+                "Isha & Taraweeh prayer",
+                "Make dua after each prayer",
+                "Give charity (even small amount)",
+                "Pray Tahajjud",
+                "Read morning Adhkar",
+                "Read evening Adhkar",
+                "Fast with intention",
+                "Avoid gossip",
+                "Help someone in need"
+            ],
+
+            scheduleData: [
+                {
+                    "block": "Magrib",
+                    "blockIcon": "🌙",
+                    "startTime": "6:30 PM",
+                    "endTime": "6:45 PM",
+                    "items": [
+                        { "time": "6:30 PM - 6:45 PM", "activity": "Magrib", "duration": "15 min", "special": true },
+                        { "time": "6:45 PM - 8:45 PM", "activity": "Trading", "duration": "2 hr", "special": false },
+                        { "time": "8:45 PM - 9:00 PM", "activity": "Wudu", "duration": "15 min", "special": false }
+                    ]
+                },
+                {
+                    "block": "Isha",
+                    "blockIcon": "✨",
+                    "startTime": "9:25 PM",
+                    "endTime": "10:00 PM",
+                    "items": [
+                        { "time": "9:00 PM - 9:05 PM", "activity": "Isha", "duration": "5 min", "special": true },
+                        { "time": "9:05 PM - 9:15 PM", "activity": "Nafils", "duration": "10 min", "special": false },
+                        { "time": "9:15 PM - 9:20 PM", "activity": "Surah Al-Waqi'ah", "duration": "5 min", "special": false },
+                        { "time": "9:20 PM - 9:25 PM", "activity": "Short Dua", "duration": "5 min", "special": false },
+                        { "time": "9:25 PM - 10:00 PM", "activity": "Dinner", "duration": "35 min", "special": false },
+                        { "time": "10:00 PM - 11:30 PM", "activity": "Relax", "duration": "1 hr 30 min", "special": false }
+                    ]
+                },
+                {
+                    "block": "Sleep",
+                    "blockIcon": "💤",
+                    "startTime": "11:30 PM",
+                    "endTime": "4:00 AM",
+                    "items": [
+                        { "time": "11:30 PM - 4:00 AM", "activity": "Sleep", "duration": "4 hr 30 min", "special": false },
+                        { "time": "4:00 AM - 4:45 AM", "activity": "Suhur", "duration": "45 min", "special": false },
+                        { "time": "4:45 AM - 5:00 AM", "activity": "Wudu", "duration": "15 min", "special": false },
+                        { "time": "5:00 AM - 5:15 AM", "activity": "Tahajjud", "duration": "15 min", "special": false },
+                        { "time": "5:15 AM - 5:45 AM", "activity": "Salatul Tasbih", "duration": "30 min", "special": false }
+                    ]
+                },
+                {
+                    "block": "Fajr",
+                    "blockIcon": "☀️",
+                    "startTime": "5:45 AM",
+                    "endTime": "5:55 AM",
+                    "items": [
+                        { "time": "5:45 AM - 5:55 AM", "activity": "Fajr", "duration": "10 min", "special": true },
+                        { "time": "5:55 AM - 6:00 AM", "activity": "Short Dua", "duration": "5 min", "special": false },
+                        { "time": "6:00 AM - 7:00 AM", "activity": "Quran", "duration": "1 hr", "special": false },
+                        { "time": "7:00 AM - 10:00 AM", "activity": "Nap", "duration": "3 hr", "special": false },
+                        { "time": "10:00 AM - 10:30 AM", "activity": "Shower", "duration": "30 min", "special": false },
+                        { "time": "10:30 AM - 12:30 PM", "activity": "Memorization", "duration": "2 hr", "special": false }
+                    ]
+                },
+                {
+                    "block": "Dhuhr",
+                    "blockIcon": "🌤️",
+                    "startTime": "12:30 PM",
+                    "endTime": "12:45 PM",
+                    "items": [
+                        { "time": "12:30 PM - 12:45 PM", "activity": "Dhuhr", "duration": "15 min", "special": true },
+                        { "time": "12:45 PM - 1:00 PM", "activity": "Long Dua", "duration": "15 min", "special": false },
+                        { "time": "1:00 PM - 4:00 PM", "activity": "Trading", "duration": "3 hr", "special": false },
+                        { "time": "4:00 PM - 4:15 PM", "activity": "Wudu", "duration": "15 min", "special": false },
+                        { "time": "4:15 PM - 4:30 PM", "activity": "Revision", "duration": "15 min", "special": false }
+                    ]
+                },
+                {
+                    "block": "Asr",
+                    "blockIcon": "🌆",
+                    "startTime": "4:30 PM",
+                    "endTime": "4:40 PM",
+                    "items": [
+                        { "time": "4:30 PM - 4:40 PM", "activity": "Asr", "duration": "10 min", "special": true },
+                        { "time": "4:40 PM - 4:45 PM", "activity": "Short Dua", "duration": "5 min", "special": false },
+                        { "time": "4:45 PM - 6:05 PM", "activity": "Quran", "duration": "1 hr 20 min", "special": false },
+                        { "time": "6:05 PM - 6:30 PM", "activity": "Long Dua", "duration": "25 min", "special": false }
+                    ]
+                }
+            ],
+
+            // ==================== INIT ====================
+            init: function() {
+                // Initialize state for habits
+                this.habitsList.forEach((_, index) => {
+                    this.state.habits[index + 1] = false;
+                });
+                
+                // Load settings
+                this.Settings.init();
+                
+                // Render everything
+                this.renderDuas();
+                this.renderHabits();
+                this.renderSchedule();
+                
+                // Set up event listeners
+                this.setupEventListeners();
+            },
+
+            setupEventListeners: function() {
+                document.getElementById('settingsModal').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        DeenStudio.UI.closeSettings();
+                    }
+                });
+            },
+
+            // ==================== RENDER FUNCTIONS ====================
+            renderDuas: function() {
+                // Render Duniya
+                const duniyaContainer = document.getElementById('duniyaList');
+                duniyaContainer.innerHTML = '';
+                this.duas.duniya.forEach((text, index) => {
+                    duniyaContainer.innerHTML += `<div class="dua-item"><span class="dua-text">${index + 1}. ${text}</span></div>`;
+                });
+
+                // Render Akhira
+                const akhiraContainer = document.getElementById('akhiraList');
+                akhiraContainer.innerHTML = '';
+                this.duas.akhira.forEach((text, index) => {
+                    akhiraContainer.innerHTML += `<div class="dua-item"><span class="dua-text">${index + 1}. ${text}</span></div>`;
+                });
+
+                // Update total
+                document.getElementById('totalDuas').textContent = this.duas.duniya.length + this.duas.akhira.length;
+            },
+
+            renderHabits: function() {
+                const container = document.getElementById('habitList');
+                container.innerHTML = '';
+                
+                this.habitsList.forEach((habit, index) => {
+                    const habitId = index + 1;
+                    const checked = this.state.habits[habitId] || false;
+                    
+                    container.innerHTML += `
+                        <div class="habit-item" onclick="DeenStudio.Habits.toggle(${habitId})">
+                            <div class="habit-checkbox ${checked ? 'checked' : ''}" id="checkbox-${habitId}">${checked ? '✓' : ''}</div>
+                            <span class="habit-text ${checked ? 'completed' : ''}" id="habit-text-${habitId}">${habit}</span>
+                        </div>
+                    `;
+                });
+                
+                this.updateHabitsCounter();
+            },
+
+            renderSchedule: function() {
+                const container = document.getElementById('timeline');
+                container.innerHTML = '';
+                
+                this.scheduleData.forEach((block, blockIndex) => {
+                    let itemsHtml = '';
+                    block.items.forEach((item, itemIndex) => {
+                        itemsHtml += `
+                            <div class="timeline-item${item.special ? ' special-activity' : ''}" style="--item-index: ${blockIndex * 10 + itemIndex}">
+                                <div class="item-time">${item.time}</div>
+                                <div class="item-content">
+                                    <span class="item-activity">${item.activity}</span>
+                                    <span class="item-duration">${item.duration}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML += `
+                        <div class="timeline-block">
+                            <div class="timeline-block-header">
+                                <span class="block-icon">${block.blockIcon}</span>
+                                <span class="block-title">${block.block}</span>
+                                <span class="block-time">${block.startTime} - ${block.endTime}</span>
+                            </div>
+                            <div class="timeline-items">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            updateHabitsCounter: function() {
+                const completed = Object.values(this.state.habits).filter(h => h).length;
+                document.getElementById('habitsDone').textContent = `${completed}/${this.habitsList.length}`;
+            },
+
+            // ==================== UI FUNCTIONS ====================
+            UI: {
+                switchMainTab: function(tab) {
+                    DeenStudio.state.currentMainTab = tab;
+                    
+                    document.getElementById('tabPlanner').classList.toggle('active', tab === 'planner');
+                    document.getElementById('tabDua').classList.toggle('active', tab === 'dua');
+                    document.getElementById('tabHabit').classList.toggle('active', tab === 'habit');
+                    
+                    document.getElementById('plannerSection').classList.toggle('hidden', tab !== 'planner');
+                    document.getElementById('duaSection').classList.toggle('hidden', tab !== 'dua');
+                    document.getElementById('habitSection').classList.toggle('hidden', tab !== 'habit');
+                },
+
+                switchSubTab: function(tab) {
+                    DeenStudio.state.currentSubTab = tab;
+                    
+                    document.getElementById('subTabDuniya').classList.toggle('active', tab === 'duniya');
+                    document.getElementById('subTabAkhira').classList.toggle('active', tab === 'akhira');
+                    
+                    document.getElementById('duniyaSubsection').classList.toggle('hidden', tab !== 'duniya');
+                    document.getElementById('akhiraSubsection').classList.toggle('hidden', tab !== 'akhira');
+                },
+
+                openSettings: function() {
+                    document.getElementById('settingsModal').classList.add('show');
+                },
+
+                closeSettings: function() {
+                    document.getElementById('settingsModal').classList.remove('show');
+                }
+            },
+
+            // ==================== HABITS ====================
+            Habits: {
+                toggle: function(habitId) {
+                    DeenStudio.state.habits[habitId] = !DeenStudio.state.habits[habitId];
+                    
+                    const checkbox = document.getElementById(`checkbox-${habitId}`);
+                    const habitText = document.getElementById(`habit-text-${habitId}`);
+                    
+                    if (DeenStudio.state.habits[habitId]) {
+                        checkbox.classList.add('checked');
+                        checkbox.textContent = '✓';
+                        habitText.classList.add('completed');
+                    } else {
+                        checkbox.classList.remove('checked');
+                        checkbox.textContent = '';
+                        habitText.classList.remove('completed');
+                    }
+                    
+                    DeenStudio.updateHabitsCounter();
+                    DeenStudio.Storage.save('habits', DeenStudio.state.habits);
+                }
+            },
+
+            // ==================== SETTINGS ====================
+            Settings: {
+                currentTheme: 'dark',
+                currentFontSize: 16,
+
+                init: function() {
+                    const savedTheme = DeenStudio.Storage.load('theme');
+                    if (savedTheme) this.currentTheme = savedTheme;
+                    
+                    const savedFontSize = DeenStudio.Storage.load('font_size');
+                    if (savedFontSize) this.currentFontSize = parseInt(savedFontSize);
+                    
+                    this.apply();
+                    
+                    if (!savedTheme) DeenStudio.Storage.save('theme', 'dark');
+                    if (!savedFontSize) DeenStudio.Storage.save('font_size', 16);
+                },
+
+                apply: function() {
+                    if (this.currentTheme === 'light') {
+                        document.body.classList.add('light-mode');
+                        document.getElementById('lightThemeBtn')?.classList.add('active');
+                        document.getElementById('darkThemeBtn')?.classList.remove('active');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        document.getElementById('darkThemeBtn')?.classList.add('active');
+                        document.getElementById('lightThemeBtn')?.classList.remove('active');
+                    }
+
+                    document.documentElement.style.setProperty('--font-size-base', this.currentFontSize + 'px');
+                    
+                    const slider = document.getElementById('fontSizeSlider');
+                    const display = document.getElementById('fontSizeDisplay');
+                    if (slider) slider.value = this.currentFontSize;
+                    if (display) display.textContent = this.currentFontSize + 'px';
+                },
+
+                setTheme: function(theme) {
+                    this.currentTheme = theme;
+                    DeenStudio.Storage.save('theme', theme);
+                    this.apply();
+                },
+
+                updateFontSize: function(size) {
+                    this.currentFontSize = parseInt(size);
+                    DeenStudio.Storage.save('font_size', this.currentFontSize);
+                    document.getElementById('fontSizeDisplay').textContent = this.currentFontSize + 'px';
+                    document.documentElement.style.setProperty('--font-size-base', this.currentFontSize + 'px');
+                }
+            },
+
+            // ==================== STORAGE ====================
+            Storage: {
+                save: function(key, value) {
+                    try {
+                        localStorage.setItem('deen_' + key, JSON.stringify(value));
+                        return true;
+                    } catch (e) {
+                        return false;
+                    }
+                },
+
+                load: function(key) {
+                    try {
+                        const item = localStorage.getItem('deen_' + key);
+                        return item ? JSON.parse(item) : null;
+                    } catch (e) {
+                        return null;
+                    }
+                }
+            }
+        };
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            DeenStudio.init();
+        });
+    </script>
+</body>
+</html>
